@@ -23,10 +23,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/pprof/internal/binutils"
-	"github.com/google/pprof/internal/graph"
-	"github.com/google/pprof/internal/proftest"
-	"github.com/google/pprof/profile"
+	"github.com/guancecloud/pprof/internal/binutils"
+	"github.com/guancecloud/pprof/internal/graph"
+	"github.com/guancecloud/pprof/internal/proftest"
+	"github.com/guancecloud/pprof/profile"
 )
 
 type testcase struct {

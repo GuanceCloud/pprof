@@ -1,6 +1,6 @@
-[![Github Action CI](https://github.com/google/pprof/workflows/ci/badge.svg)](https://github.com/google/pprof/actions)
-[![Codecov](https://codecov.io/gh/google/pprof/graph/badge.svg)](https://codecov.io/gh/google/pprof)
-[![Go Reference](https://pkg.go.dev/badge/github.com/google/pprof/profile.svg)](https://pkg.go.dev/github.com/google/pprof/profile)
+[![Github Action CI](https://github.com/guancecloud/pprof/workflows/ci/badge.svg)](https://github.com/guancecloud/pprof/actions)
+[![Codecov](https://codecov.io/gh/guancecloud/pprof/graph/badge.svg)](https://codecov.io/gh/guancecloud/pprof)
+[![Go Reference](https://pkg.go.dev/badge/github.com/guancecloud/pprof/profile.svg)](https://pkg.go.dev/github.com/guancecloud/pprof/profile)
 
 # Introduction
 
@@ -37,7 +37,7 @@ Prerequisites:
 
 To build and install it:
 
-    go install github.com/google/pprof@latest
+    go install github.com/guancecloud/pprof@latest
 
 The binary will be installed `$GOPATH/bin` (`$HOME/go/bin` by default).
 

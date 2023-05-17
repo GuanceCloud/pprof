@@ -32,8 +32,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/google/pprof/internal/elfexec"
-	"github.com/google/pprof/internal/plugin"
+	"github.com/guancecloud/pprof/internal/elfexec"
+	"github.com/guancecloud/pprof/internal/plugin"
 )
 
 // A Binutils implements plugin.ObjTool by invoking the GNU binutils.

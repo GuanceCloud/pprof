@@ -21,10 +21,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/google/pprof/internal/binutils"
-	"github.com/google/pprof/internal/plugin"
-	"github.com/google/pprof/internal/symbolizer"
-	"github.com/google/pprof/internal/transport"
+	"github.com/guancecloud/pprof/internal/binutils"
+	"github.com/guancecloud/pprof/internal/plugin"
+	"github.com/guancecloud/pprof/internal/symbolizer"
+	"github.com/guancecloud/pprof/internal/transport"
 )
 
 // setDefaults returns a new plugin.Options with zero fields sets to

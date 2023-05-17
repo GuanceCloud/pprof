@@ -27,9 +27,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/google/pprof/internal/plugin"
-	"github.com/google/pprof/internal/proftest"
-	"github.com/google/pprof/profile"
+	"github.com/guancecloud/pprof/internal/plugin"
+	"github.com/guancecloud/pprof/internal/proftest"
+	"github.com/guancecloud/pprof/profile"
 )
 
 func makeTestServer(t testing.TB, prof *profile.Profile) *httptest.Server {

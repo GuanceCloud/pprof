@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/google/pprof/internal/proftest"
+	"github.com/guancecloud/pprof/internal/proftest"
 )
 
 func TestMapMapping(t *testing.T) {
