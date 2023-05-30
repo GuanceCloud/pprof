@@ -305,6 +305,10 @@ When comparing cumulative profiles collected on the same program, percentages in
 the output are relative to the difference between the total for the source
 profile and the total for the base profile.
 
+* **-base_events=event_a,event_b,...** Only these specified events will do profile 
+subtraction, and others keep unchanged. if this option is not provided, it is equivalent 
+to supply all events. 
+
 The **-normalize** flag can be used when a base profile is specified with either
 the `-diff_base` or the `-base` option. This flag scales the source profile so
 that the total of samples in the source profile is equal to the total of samples

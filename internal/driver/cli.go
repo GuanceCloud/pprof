@@ -18,18 +18,21 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/guancecloud/pprof/internal/binutils"
 	"github.com/guancecloud/pprof/internal/plugin"
 )
 
 type source struct {
-	Sources   []string
-	ExecName  string
-	BuildID   string
-	Base      []string
-	DiffBase  bool
-	Normalize bool
+	Sources    []string
+	ExecName   string
+	BuildID    string
+	Base       []string
+	BaseEvents map[string]struct{}
+	DiffBase   bool
+	DiffEvents []string
+	Normalize  bool
 
 	Seconds            int
 	Timeout            int
@@ -47,6 +50,7 @@ func parseFlags(o *plugin.Options) (*source, []string, error) {
 	// Comparisons.
 	flagDiffBase := flag.StringList("diff_base", "", "Source of base profile for comparison")
 	flagBase := flag.StringList("base", "", "Source of base profile for profile subtraction")
+	flagBaseEvents := flag.String("base_events", "", "Only the specified events of base profile will do profile subtraction")
 	// Source options.
 	flagSymbolize := flag.String("symbolize", "", "Options for profile symbolization")
 	flagBuildID := flag.String("buildid", "", "Override build id for first mapping")
@@ -147,7 +151,7 @@ func parseFlags(o *plugin.Options) (*source, []string, error) {
 		Comment:            *flagAddComment,
 	}
 
-	if err := source.addBaseProfiles(*flagBase, *flagDiffBase); err != nil {
+	if err := source.addBaseProfiles(*flagBase, *flagDiffBase, *flagBaseEvents); err != nil {
 		return nil, nil, err
 	}
 
@@ -168,7 +172,7 @@ func parseFlags(o *plugin.Options) (*source, []string, error) {
 // addBaseProfiles adds the list of base profiles or diff base profiles to
 // the source. This function will return an error if both base and diff base
 // profiles are specified.
-func (source *source) addBaseProfiles(flagBase, flagDiffBase []*string) error {
+func (source *source) addBaseProfiles(flagBase, flagDiffBase []*string, flagBaseEvents string) error {
 	base, diffBase := dropEmpty(flagBase), dropEmpty(flagDiffBase)
 	if len(base) > 0 && len(diffBase) > 0 {
 		return errors.New("-base and -diff_base flags cannot both be specified")
@@ -177,6 +181,18 @@ func (source *source) addBaseProfiles(flagBase, flagDiffBase []*string) error {
 	source.Base = base
 	if len(diffBase) > 0 {
 		source.Base, source.DiffBase = diffBase, true
+	}
+	if strings.TrimSpace(flagBaseEvents) != "" {
+		events := strings.Split(flagBaseEvents, ",")
+		if len(events) > 0 {
+			source.BaseEvents = make(map[string]struct{}, len(events))
+			for _, event := range events {
+				event = strings.TrimSpace(event)
+				if event != "" {
+					source.BaseEvents[event] = struct{}{}
+				}
+			}
+		}
 	}
 	return nil
 }
@@ -320,6 +336,7 @@ var usageMsgSrc = "\n\n" +
 	"                          Displayed on some reports or with pprof -comments\n" +
 	"    -diff_base source     Source of base profile for comparison\n" +
 	"    -base source          Source of base profile for profile subtraction\n" +
+	"    -base_events a,b,...  Only the specified events will do profile subtraction, and others will keep unchanged\n" +
 	"    profile.pb.gz         Profile in compressed protobuf format\n" +
 	"    legacy_profile        Profile in legacy pprof format\n" +
 	"    http://host/profile   URL for profile handler to retrieve\n" +

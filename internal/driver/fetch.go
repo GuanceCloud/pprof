@@ -70,7 +70,17 @@ func fetchProfiles(s *source, o *plugin.Options) (*profile.Profile, error) {
 				return nil, err
 			}
 		}
-		pbase.Scale(-1)
+		if len(s.BaseEvents) > 0 {
+			ratios := make([]float64, len(pbase.SampleType))
+			for i, st := range pbase.SampleType {
+				if _, ok := s.BaseEvents[st.Type]; ok {
+					ratios[i] = -1
+				}
+			}
+			pbase.ScaleN(ratios)
+		} else {
+			pbase.Scale(-1)
+		}
 		p, m, err = combineProfiles([]*profile.Profile{p, pbase}, []plugin.MappingSources{m, mbase})
 		if err != nil {
 			return nil, err
